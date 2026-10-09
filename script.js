@@ -33,7 +33,6 @@ const minBranchDepth = 3;
 const maxBranchDepth = 5;
 const skyTime = 1500;
 
-const sunRadius = 36;
 const starCount = 70;
 const starSeed = 7;
 
@@ -260,27 +259,18 @@ function drawSpikes(points, opacity) {
 }
 
 
-// Sky: sun by day, stars by night, based on the real clock
+// Sky: stars at night, based on the real clock
 function drawSky(buildTime) {
   const opacity = getSkyProgress(buildTime);
-
-  if (opacity === 0) {
-    return;
-  }
-
   const hours = getHoursOfDay(new Date());
   const daytime = isDaytime(hours);
 
-  ctx.globalAlpha = opacity;
-  ctx.lineWidth = 1.5;
-
-  if (daytime) {
-    const position = getSunPosition(hours);
-    drawSun(position.x, position.y);
-  } else {
-    drawStars();
+  if (opacity === 0 || daytime) {
+    return;
   }
 
+  ctx.globalAlpha = opacity;
+  drawStars();
   ctx.globalAlpha = 1;
 }
 
@@ -299,48 +289,6 @@ function getHoursOfDay(date) {
 
 function isDaytime(hours) {
   return hours >= 6 && hours < 18;
-}
-
-function getSunPosition(hours) {
-  const hoursSinceRise = hours - 6;
-  const arcProgress = hoursSinceRise / 12;
-  const angle = Math.PI * arcProgress;
-
-  const centerX = screenWidth / 2;
-  const reachX = centerX - margin * 3;
-  const horizonY = groundY;
-  const highestY = screenHeight * 0.12;
-  const reachY = horizonY - highestY;
-
-  const x = centerX - reachX * Math.cos(angle);
-  const y = horizonY - reachY * Math.sin(angle);
-
-  return { x: x, y: y };
-}
-
-function drawSun(x, y) {
-  ctx.beginPath();
-  ctx.arc(x, y, sunRadius, 0, Math.PI * 2);
-  ctx.stroke();
-
-  drawSunRays(x, y);
-}
-
-function drawSunRays(x, y) {
-  const rayCount = 12;
-  const innerRadius = sunRadius + 10;
-  const outerRadius = sunRadius + 24;
-
-  for (let i = 0; i < rayCount; i++) {
-    const angle = (Math.PI * 2 * i) / rayCount;
-    const dx = Math.cos(angle);
-    const dy = Math.sin(angle);
-
-    ctx.beginPath();
-    ctx.moveTo(x + dx * innerRadius, y + dy * innerRadius);
-    ctx.lineTo(x + dx * outerRadius, y + dy * outerRadius);
-    ctx.stroke();
-  }
 }
 
 function drawStars() {
