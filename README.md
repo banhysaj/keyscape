@@ -4,7 +4,7 @@ Type, stop for five seconds, and your key presses get drawn as a line-art mounta
 
 ![A finished landscape: a mountain in front, faded ranges behind it, trees on the flat ground](screenshots/hero.png)
 
-To run it, open `index.html` in a browser. There's nothing to install or build.
+Try it live at **[keyscape-4fp.pages.dev](https://keyscape-4fp.pages.dev/)** (hosted on Cloudflare Pages). To run it locally, open `index.html` in a browser.
 
 ## The pipeline
 
