@@ -1,6 +1,6 @@
 # Keyscape
 
-Type, stop for five seconds, and your key presses get drawn as a line-art mountain range. Plain JavaScript on a `<canvas>`, no libraries.
+Type, stop for five seconds, and your key presses get drawn as a line-art mountain range. Plain JavaScript on a `<canvas>`.
 
 ![A finished landscape: a mountain in front, faded ranges behind it, trees on the flat ground](screenshots/hero.png)
 
@@ -20,7 +20,7 @@ Every frame redraws the whole picture from scratch (`drawScene`). Nothing is sto
 
 `handleKeyPress` runs on every key and stores two things:
 
-- **a code**, from `keyToCode`: `Math.floor(Math.random() * charCode)`. The random part means the same text gives a different landscape each time.
+- **a code**, from `keyToCode`: `Math.floor(Math.random() * charCode)`.
 - **a roughness**, from `measureRoughness`. It measures the pause since the last key. A pause of 120ms or less gives `1.1`, 600ms or more gives `0.4`, and anything in between is interpolated. Fast typing makes bigger steps, slow typing makes smaller ones.
 
 Each key also restarts a 5 second `setTimeout`. When it finally runs out, `startBuild` kicks off the animation.
